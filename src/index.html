@@ -25,19 +25,39 @@
     <div class="col-md-12" ng-controller="TodoListController as todoList">
 
       <h1>Angular Todo App</h1>
-      <form>
+      <form ng-submit="todoList.addItem(todoList.newItemText)">
         <input ng-model="todoList.newItemText" class="form-control" />
       </form>
-
-      {{ todoList.newItemText }}
 
       <ul class="list-unstyled">
         <li class="ui-state-default" ng-repeat="item in todoList.displayItems()">
           <div class="checkbox">
-            <div>{{ item }}</div>
+            <label>
+              <input type="checkbox" ng-model="item.done">
+              <div ng-class="{'done-item': item.done}">{{ item.text }}</div>
+            </label>
+            <button ng-click="todoList.removeItem($index)" class="btn btn-default btn-xs pull-right">ลบ</button>
           </div>
         </li>
       </ul>
+
+      <div ng-if="todoList.itemList.length > 0">
+        <div class="radio">
+          <label>
+            <input type="radio" name="filter-type" data-ng-model="todoList.filterType" ng-value="todoList.takeAll"> ทั้งหมด
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="filter-type" data-ng-model="todoList.filterType" ng-value="todoList.onlyDone"> เสร็จแล้ว
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="filter-type" data-ng-model="todoList.filterType" ng-value="todoList.onlyNotDone"> ยังไม่ได้ทำ
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 
